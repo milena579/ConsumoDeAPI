@@ -1,0 +1,28 @@
+fetch("https://dragonball-api.com/api/characters/")
+  .then((response) => response.json())
+  .then((data) => {
+      console.log(data); // Veja o que está retornando aqui
+      const personagem = document.getElementById("personagem");
+
+      // Verifica se data é um array
+      if (Array.isArray(data)) {
+          const cards = data.map((item) => {
+              const card = document.createElement("div");
+              card.className = "card mb-4";
+              card.innerHTML = `
+                  <div class="card-body">
+                      <h5 class="card-title">ID ${item.id}</h5>
+                      <h6 class="card-subtitle mb-2">${item.nome}</h6>
+                      <img src="${item.image}" />
+                  </div>
+              `;
+              return card;
+          });
+
+          cards.forEach(card => personagem.appendChild(card));
+          console.log(cards.map(card => card.innerText));
+      } else {
+          console.error("O dado retornado não é um array:", data);
+      }
+  })
+  .catch((error) => console.error("Erro:", error));
