@@ -49,8 +49,22 @@ class ContactController{
         response.status(201).json(contact)
     }
 
-    update(){
+    async update(request, response){
         //atualizar um registro
+
+        const {id} = request.params
+        const{name, email, phone, category_id} = request.body
+
+        if(!{id}){
+            return response.status(400).json({error: "Name is require"})
+        }
+
+        const contact = await ContactRepository.create({
+            name,
+            email: email || null,
+            phone: phone || null,
+            category_id: category_id || null
+        });
     }
 
     async delete(request, response){
